@@ -1,11 +1,8 @@
 import { useState } from "react";
 import { FcIdea } from "react-icons/fc";
-
-// import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-
 import "./App.css";
-import Questions from "./component/questions ";
 
+import Questions from "./component/questions ";
 function App() {
   return (
     <>
