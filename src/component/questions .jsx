@@ -3,7 +3,6 @@ import { useGlobalContext } from "../context.jsx";
 
 export default function Questions() {
   const { questions } = useGlobalContext();
-  console.log("in questions page:", questions);
   const randomIndex = Math.floor(Math.random() * questions.length);
   return (
     <>
@@ -19,7 +18,7 @@ export default function Questions() {
                   <div
                     key={item}
                     className={` ${
-                      i < 2 ? "active-ball" : ""
+                      i < 2 ? "gradiant" : ""
                     } lg:w-[50px] w-[40px] lg:h-[50px] h-[40px] font-bold lg:leading-[50px] leading-[40px] rounded-[50%] bg-[#393F6E]`}
                   >
                     {item}
@@ -27,11 +26,22 @@ export default function Questions() {
                 ))}
               </div>
               <div className="  w-full flex-2">
-                <div className="font-bold text-xl flex flex-col h-full w-full items-center justify-center">
+                <div className="   text-lg flex flex-col h-full w-full items-center justify-center">
                   <div>{questions[randomIndex]?.question}</div>
                 </div>
               </div>
-              <div className=" bg-blue-900 w-full flex-4"></div>
+              <div className="  w-full flex-4">
+                <div className="grid grid-cols-2 gap-5 h-full w-full content-center ">
+                  {[0, 1, 2, 3].map((item, i) => (
+                    <button
+                      className="bg-[#393F6E] p-4.5 rounded-xl cursor-pointer
+ capitalize font-bold text-lg   focus:bg-gradient-to-r hover:bg-gradient-to-r from-[#E65895] to-[#BC6BE8]"
+                    >
+                      aaaaaa
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
