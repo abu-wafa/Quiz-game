@@ -1,6 +1,8 @@
 import congrat from "../assets/img/congrats.png";
-
+import { useGlobalContext } from "../context.jsx";
+import { Link } from "react-router-dom";
 const Congratulation = () => {
+  const score = JSON.parse(localStorage.getItem("score"));
   return (
     <>
       <div className="congratulation w-full h-full ">
@@ -11,11 +13,13 @@ const Congratulation = () => {
               Congratulations! You completed the quiz!
             </div>
             <div className=" mb-8 text-[#E2E4F2]">
-              You answer 4/10 correctly
+              You answer {score}/10 correctly
             </div>
-            <button className="cursor-pointer bg-[#454a7a] hover:bg-gradient-to-r from-[#E65895] to-[#BC6BE8] text-white font-bold py-4 sm:px-18 px-10 rounded mb-16">
-              Play Again
-            </button>
+            <Link to="/">
+              <button className="cursor-pointer bg-[#454a7a] hover:bg-gradient-to-r from-[#E65895] to-[#BC6BE8] text-white font-bold py-4 sm:px-18 px-10 rounded mb-16">
+                Play Again
+              </button>
+            </Link>
           </div>
         </div>
       </div>

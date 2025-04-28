@@ -1,9 +1,9 @@
 import "./Questions.css";
 import { useGlobalContext } from "../context.jsx";
-
+import right from "../assets/svg/Check_round_fill.svg";
 export default function Questions() {
-  const { questions } = useGlobalContext();
-  const randomIndex = Math.floor(Math.random() * questions.length);
+  const { quizData, UpdateQuistion, currentQuestion, navigateQuestion } =
+    useGlobalContext();
   return (
     <>
       <div className="game shadow-[0_35px_35px_rgba(0,0,0,0.25)] bg-[#343964] rounded-[10px] h-full row-start-3 row-end-9 ">
@@ -14,27 +14,31 @@ export default function Questions() {
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, i) => (
                   <div
                     key={item}
+                    onClick={() => navigateQuestion(i)}
                     className={` ${
-                      i < 2 ? "gradiant" : ""
+                      i <= currentQuestion ? "gradiant" : ""
                     } lg:w-[50px] w-[40px] lg:h-[50px] h-[40px] cursor-pointer font-bold lg:leading-[50px] leading-[40px] rounded-[50%] bg-[#393F6E]`}
                   >
-                    {item}
+                    {item}s
                   </div>
                 ))}
               </div>
               <div className="  w-full flex-2">
                 <div className="   text-lg flex flex-col h-full w-full items-center justify-center">
-                  <div>{questions[randomIndex]?.question}</div>
+                  <div>{quizData.allQuestions[currentQuestion]}</div>
                 </div>
               </div>
               <div className="  w-full flex-4">
                 <div className="grid grid-cols-2 gap-5 h-full w-full content-center ">
-                  {[0, 1, 2, 3].map((item, i) => (
+                  {quizData.options[currentQuestion].map((item, i) => (
                     <button
+                      key={i}
                       className="bg-[#393F6E] p-4.5 rounded-xl cursor-pointer
  capitalize font-bold text-lg   focus:bg-gradient-to-r hover:bg-gradient-to-r from-[#E65895] to-[#BC6BE8]"
+                      onClick={(item) => UpdateQuistion(item)}
                     >
-                      aaaaaa
+                      <span>{/* <img src={right} alt="correct" /> */}</span>
+                      {item}
                     </button>
                   ))}
                 </div>

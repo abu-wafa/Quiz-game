@@ -1,7 +1,8 @@
 import { FcIdea } from "react-icons/fc";
 import Questions from "../component/questions ";
-
+import { useGlobalContext } from "../context.jsx";
 const Quiz = () => {
+  const { score } = useGlobalContext();
   return (
     <div>
       <div className="grid grid-rows-9">
@@ -15,7 +16,7 @@ const Quiz = () => {
                 <FcIdea className="inline mb-1" />
               </span>
               <span className="font-[system-ui] font-bold">
-                <span> 1</span>/10 Points
+                <span> {score}</span>/10 Points
               </span>
             </div>
           </div>
