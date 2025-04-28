@@ -31,7 +31,6 @@ function AppProvider({ children }) {
   quizData.options.forEach((element) => {
     element.sort(() => Math.random() - 0.5);
   });
-  console.log(quizData);
   const UpdateQuistion = (answer) => {
     // check if the answer is correct and update the score
     if (
@@ -47,7 +46,6 @@ function AppProvider({ children }) {
     }
 
     if (currentQuestion >= quizData.allQuestions.length - 1) {
-      alert("Quiz Finished");
       window.location.href = "http://localhost:5173/congrat";
       setCurrentQuestion(0);
       setScore(0);

@@ -4,6 +4,12 @@ import right from "../assets/svg/Check_round_fill.svg";
 export default function Questions() {
   const { quizData, UpdateQuistion, currentQuestion, navigateQuestion } =
     useGlobalContext();
+  // function to decode the otptions To html entities
+  const decodeHtml = (element) => {
+    const txt = document.createElement("textarea");
+    txt.innerHTML = element;
+    return txt.value;
+  };
   return (
     <>
       <div className="game shadow-[0_35px_35px_rgba(0,0,0,0.25)] bg-[#343964] rounded-[10px] h-full row-start-3 row-end-9 ">
@@ -25,7 +31,9 @@ export default function Questions() {
               </div>
               <div className="  w-full flex-2">
                 <div className="   text-lg flex flex-col h-full w-full items-center justify-center">
-                  <div>{quizData.allQuestions[currentQuestion]}</div>
+                  <div>
+                    {decodeHtml(quizData.allQuestions[currentQuestion])}
+                  </div>
                 </div>
               </div>
               <div className="  w-full flex-4">
@@ -38,7 +46,7 @@ export default function Questions() {
                       onClick={(item) => UpdateQuistion(item)}
                     >
                       <span>{/* <img src={right} alt="correct" /> */}</span>
-                      {item}
+                      {decodeHtml(item)}
                     </button>
                   ))}
                 </div>
