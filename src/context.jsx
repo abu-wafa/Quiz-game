@@ -18,8 +18,7 @@ function AppProvider({ children }) {
     options: [],
     correctAnswer: [],
   };
-  console.log("score : ", score);
-
+  // loop through the data and push the questions, options and correct answer to the quizData object
   data.forEach((element) => {
     quizData.allQuestions.push(element.question);
     quizData.options.push([
@@ -28,6 +27,11 @@ function AppProvider({ children }) {
     ]);
     quizData.correctAnswer.push(element.correct_answer);
   });
+  // shuffle the options
+  quizData.options.forEach((element) => {
+    element.sort(() => Math.random() - 0.5);
+  });
+  console.log(quizData);
   const UpdateQuistion = (answer) => {
     // check if the answer is correct and update the score
     if (
