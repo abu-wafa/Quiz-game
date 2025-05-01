@@ -11,6 +11,8 @@ function AppProvider({ children }) {
     : [""];
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
+  const [finished, setFinished] = useState(false);
+  const [counter, setCounter] = useState(0);
 
   // create an object to hold the Quiz data
   let quizData = {
@@ -32,6 +34,11 @@ function AppProvider({ children }) {
     element.sort(() => Math.random() - 0.5);
   });
   const UpdateQuistion = (answer) => {
+    // increas the counter by 1 to track the number of questions answered
+    setCounter((prev) => prev + 1);
+    if (counter === 9) {
+      setFinished(true);
+    }
     // check if the answer is correct and update the score
     if (
       answer.target.innerText.toLowerCase() ==
@@ -44,15 +51,18 @@ function AppProvider({ children }) {
       setScore((prev) => prev + 1);
       localStorage.setItem("score", JSON.stringify(score + 1));
     }
-
+    // check if the current question is the last question and reset the current question
     if (currentQuestion >= quizData.allQuestions.length - 1) {
-      window.location.href = "http://localhost:5173/congrat";
       setCurrentQuestion(0);
-      setScore(0);
       return;
     }
     setCurrentQuestion((perv) => perv + 1);
   };
+  if (finished) {
+    window.location.href = "http://localhost:5173/congrat";
+    setFinished(false);
+    setScore(0);
+  }
   const navigateQuestion = (index) => {
     setCurrentQuestion(index);
   };
