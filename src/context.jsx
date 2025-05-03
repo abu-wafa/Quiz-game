@@ -1,9 +1,24 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import getQuestions from "./data/api";
 const AppContext = createContext();
 getQuestions();
 
 function AppProvider({ children }) {
+  // function to show right icon if the answer was correct and wrong icon if the answer was wrong
+  const showAnsweIcon = (e, name) => {
+    const parent = e.target;
+    const answer = parent.querySelector(`.${name}`);
+    answer.classList.remove("hidden");
+    setTimeout(() => answer.classList.add("hidden"), 1000);
+  };
+  function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
+      [array[i], array[j]] = [array[j], array[i]]; // swap elements
+    }
+    return array;
+  }
+
   // get data from local storage
   // if data is not present, fetch from api and set to local storage
   const data = localStorage.getItem("cachedQuestions")
@@ -13,6 +28,7 @@ function AppProvider({ children }) {
   const [score, setScore] = useState(0);
   const [finished, setFinished] = useState(false);
   const [counter, setCounter] = useState(0);
+
   // create an object to hold the Quiz data
   let quizData = {
     allQuestions: [],
@@ -20,7 +36,6 @@ function AppProvider({ children }) {
     correctAnswer: [],
   };
   // loop through the data and push the questions, options and correct answer to the quizData object
-
   data?.forEach((element) => {
     quizData.allQuestions.push(element.question);
     quizData.options.push([
@@ -29,12 +44,7 @@ function AppProvider({ children }) {
     ]);
     quizData.correctAnswer.push(element.correct_answer);
   });
-  console.log(quizData);
 
-  // shuffle the options
-  quizData?.options.forEach((element) => {
-    element.sort(() => Math.random() - 0.5);
-  });
   const UpdateQuistion = (answer) => {
     // increas the counter by 1 to track the number of questions answered
     setCounter((prev) => prev + 1);
@@ -52,13 +62,18 @@ function AppProvider({ children }) {
       }
       setScore((prev) => prev + 1);
       localStorage.setItem("score", JSON.stringify(score + 1));
+      showAnsweIcon(answer, "right");
+    } else {
+      showAnsweIcon(answer, "wrong");
     }
     // check if the current question is the last question and reset the current question
     if (currentQuestion >= quizData.allQuestions.length - 1) {
       setCurrentQuestion(0);
       return;
     }
-    setCurrentQuestion((perv) => perv + 1);
+    setTimeout(() => {
+      setCurrentQuestion((perv) => perv + 1);
+    }, 1000);
   };
   if (finished) {
     window.location.href = "http://localhost:5173/congrat";
@@ -68,6 +83,11 @@ function AppProvider({ children }) {
   const navigateQuestion = (index) => {
     setCurrentQuestion(index);
   };
+
+  // quizData.options.forEach((element) => {
+  //   element.sort(() => Math.random() - 0.5);
+  // });
+
   return (
     <AppContext.Provider
       value={{

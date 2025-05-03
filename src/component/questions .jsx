@@ -1,6 +1,7 @@
 import "./Questions.css";
 import { useGlobalContext } from "../context.jsx";
 import right from "../assets/svg/Check_round_fill.svg";
+import wrong from "../assets/svg/close_round_fill.svg";
 export default function Questions() {
   const { quizData, UpdateQuistion, currentQuestion, navigateQuestion } =
     useGlobalContext();
@@ -10,7 +11,6 @@ export default function Questions() {
     txt.innerHTML = element;
     return txt.value;
   };
-  console.log(!quizData.options.length == 0);
   return (
     <>
       <div className="game shadow-[0_35px_35px_rgba(0,0,0,0.25)] bg-[#343964] rounded-[10px] h-full row-start-3 row-end-9 ">
@@ -47,10 +47,23 @@ export default function Questions() {
                         key={i}
                         className="bg-[#393F6E] p-4.5 rounded-xl cursor-pointer
  capitalize font-bold text-lg   focus:bg-gradient-to-r hover:bg-gradient-to-r from-[#E65895] to-[#BC6BE8]"
-                        onClick={(item) => UpdateQuistion(item)}
+                        onClick={(e) => UpdateQuistion(e)}
                       >
-                        <span>{/* <img src={right} alt="correct" /> */}</span>
-                        {decodeHtml(item)}
+                        <div className="flex flex-row justify-center items-center gap-2">
+                          {decodeHtml(item)}
+                          <span>
+                            <img
+                              src={right}
+                              className="right hidden"
+                              alt="correct"
+                            />
+                            <img
+                              src={wrong}
+                              className="wrong hidden"
+                              alt="wrong"
+                            />
+                          </span>
+                        </div>
                       </button>
                     ))
                   ) : (
