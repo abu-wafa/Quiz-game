@@ -8,12 +8,11 @@ function AppProvider({ children }) {
   // if data is not present, fetch from api and set to local storage
   const data = localStorage.getItem("cachedQuestions")
     ? JSON.parse(localStorage.getItem("cachedQuestions"))
-    : [""];
+    : null;
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [finished, setFinished] = useState(false);
   const [counter, setCounter] = useState(0);
-
   // create an object to hold the Quiz data
   let quizData = {
     allQuestions: [],
@@ -21,7 +20,8 @@ function AppProvider({ children }) {
     correctAnswer: [],
   };
   // loop through the data and push the questions, options and correct answer to the quizData object
-  data.forEach((element) => {
+
+  data?.forEach((element) => {
     quizData.allQuestions.push(element.question);
     quizData.options.push([
       ...element.incorrect_answers,
@@ -29,8 +29,10 @@ function AppProvider({ children }) {
     ]);
     quizData.correctAnswer.push(element.correct_answer);
   });
+  console.log(quizData);
+
   // shuffle the options
-  quizData.options.forEach((element) => {
+  quizData?.options.forEach((element) => {
     element.sort(() => Math.random() - 0.5);
   });
   const UpdateQuistion = (answer) => {

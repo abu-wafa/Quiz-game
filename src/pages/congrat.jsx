@@ -1,5 +1,4 @@
 import congrat from "../assets/img/congrats.png";
-import { useGlobalContext } from "../context.jsx";
 import { Link } from "react-router-dom";
 const Congratulation = () => {
   const score = JSON.parse(localStorage.getItem("score"));

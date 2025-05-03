@@ -10,6 +10,7 @@ export default function Questions() {
     txt.innerHTML = element;
     return txt.value;
   };
+  console.log(!quizData.options.length == 0);
   return (
     <>
       <div className="game shadow-[0_35px_35px_rgba(0,0,0,0.25)] bg-[#343964] rounded-[10px] h-full row-start-3 row-end-9 ">
@@ -32,23 +33,38 @@ export default function Questions() {
               <div className="  w-full flex-2">
                 <div className="   text-lg flex flex-col h-full w-full items-center justify-center">
                   <div>
-                    {decodeHtml(quizData.allQuestions[currentQuestion])}
+                    {!quizData.options.length == 0
+                      ? decodeHtml(quizData?.allQuestions[currentQuestion])
+                      : "Please try to refresh the page"}
                   </div>
                 </div>
               </div>
               <div className="  w-full flex-4">
                 <div className="grid grid-cols-2 gap-5 h-full w-full content-center ">
-                  {quizData.options[currentQuestion].map((item, i) => (
-                    <button
-                      key={i}
-                      className="bg-[#393F6E] p-4.5 rounded-xl cursor-pointer
+                  {!quizData.options.length == 0 ? (
+                    quizData.options[currentQuestion]?.map((item, i) => (
+                      <button
+                        key={i}
+                        className="bg-[#393F6E] p-4.5 rounded-xl cursor-pointer
  capitalize font-bold text-lg   focus:bg-gradient-to-r hover:bg-gradient-to-r from-[#E65895] to-[#BC6BE8]"
-                      onClick={(item) => UpdateQuistion(item)}
-                    >
-                      <span>{/* <img src={right} alt="correct" /> */}</span>
-                      {decodeHtml(item)}
-                    </button>
-                  ))}
+                        onClick={(item) => UpdateQuistion(item)}
+                      >
+                        <span>{/* <img src={right} alt="correct" /> */}</span>
+                        {decodeHtml(item)}
+                      </button>
+                    ))
+                  ) : (
+                    <>
+                      <button className="bg-[#393F6E]  p-4.5 rounded-xl">
+                        {" "}
+                        no data yet
+                      </button>
+                      <button className="bg-[#393F6E]  p-4.5 rounded-xl">
+                        {" "}
+                        no data yet
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
