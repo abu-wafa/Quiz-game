@@ -4,6 +4,22 @@ const AppContext = createContext();
 getQuestions();
 
 function AppProvider({ children }) {
+  // get data from local storage
+  // if data is not present, fetch from api and set to local storage
+  const data = localStorage.getItem("cachedQuestions")
+    ? JSON.parse(localStorage.getItem("cachedQuestions"))
+    : null;
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [score, setScore] = useState(0);
+  const [finished, setFinished] = useState(false);
+  const [counter, setCounter] = useState(0);
+  // decode html entities
+  const decodeHtml = (element) => {
+    const txt = document.createElement("textarea");
+    txt.innerHTML = element;
+    return txt.value;
+  };
+
   // function to show right icon if the answer was correct and wrong icon if the answer was wrong
   const showAnsweIcon = (e, name) => {
     const parent = e.target;
@@ -18,16 +34,6 @@ function AppProvider({ children }) {
     }
     return array;
   }
-
-  // get data from local storage
-  // if data is not present, fetch from api and set to local storage
-  const data = localStorage.getItem("cachedQuestions")
-    ? JSON.parse(localStorage.getItem("cachedQuestions"))
-    : null;
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [score, setScore] = useState(0);
-  const [finished, setFinished] = useState(false);
-  const [counter, setCounter] = useState(0);
 
   // create an object to hold the Quiz data
   let quizData = {
@@ -54,12 +60,8 @@ function AppProvider({ children }) {
     // check if the answer is correct and update the score
     if (
       answer.target.innerText.toLowerCase() ==
-      quizData.correctAnswer[currentQuestion].toLowerCase()
+      decodeHtml(quizData.correctAnswer[currentQuestion].toLowerCase())
     ) {
-      if (score >= 10) {
-        setScore(0);
-        localStorage.setItem("score", JSON.stringify(0));
-      }
       setScore((prev) => prev + 1);
       localStorage.setItem("score", JSON.stringify(score + 1));
       showAnsweIcon(answer, "right");
@@ -68,7 +70,9 @@ function AppProvider({ children }) {
     }
     // check if the current question is the last question and reset the current question
     if (currentQuestion >= quizData.allQuestions.length - 1) {
-      setCurrentQuestion(0);
+      setTimeout(() => {
+        setCurrentQuestion(0);
+      }, 1000);
       return;
     }
     setTimeout(() => {
@@ -76,9 +80,11 @@ function AppProvider({ children }) {
     }, 1000);
   };
   if (finished) {
-    window.location.href = "http://localhost:5173/congrat";
-    setFinished(false);
-    setScore(0);
+    setTimeout(() => {
+      window.location.href = "http://localhost:5173/congrat";
+      setFinished(false);
+      setScore(0);
+    }, 1000);
   }
   const navigateQuestion = (index) => {
     setCurrentQuestion(index);
