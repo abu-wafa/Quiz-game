@@ -1,20 +1,22 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import getQuestions from "./data/api";
 const AppContext = createContext();
-getQuestions();
 
 function AppProvider({ children }) {
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [score, setScore] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [finished, setFinished] = useState(false);
+  const [counter, setCounter] = useState(0);
+  const [allOptions, setAllOptions] = useState([]);
+  useEffect(() => {
+    getQuestions();
+  }, []);
   // get data from local storage
   // if data is not present, fetch from api and set to local storage
   const data = localStorage.getItem("cachedQuestions")
     ? JSON.parse(localStorage.getItem("cachedQuestions"))
     : null;
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [score, setScore] = useState(0);
-  const [finished, setFinished] = useState(false);
-  const [counter, setCounter] = useState(0);
-  const [allOptions, setAllOptions] = useState([]);
-
   // decode html entities
   const decodeHtml = (element) => {
     const txt = document.createElement("textarea");
@@ -47,10 +49,9 @@ function AppProvider({ children }) {
   });
 
   useEffect(() => {
-    const opt = quizData.options[currentQuestion];
-    const shuffledOptions = opt.sort(() => Math.random() - 0.5);
+    const opt = quizData?.options[currentQuestion];
+    const shuffledOptions = opt?.sort(() => Math.random() - 0.5);
     setAllOptions(shuffledOptions);
-    console.log("correct", quizData.correctAnswer);
   }, [currentQuestion]);
 
   const UpdateQuistion = (answer) => {
@@ -99,6 +100,8 @@ function AppProvider({ children }) {
         quizData,
         allOptions,
         score,
+        loading,
+        setLoading,
         UpdateQuistion,
         navigateQuestion,
         currentQuestion,

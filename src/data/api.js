@@ -1,3 +1,4 @@
+import { useGlobalContext } from "../context";
 const cacheKey = "cachedQuestions";
 
 export default async function getQuestions() {
