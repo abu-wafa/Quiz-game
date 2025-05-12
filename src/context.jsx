@@ -13,6 +13,8 @@ function AppProvider({ children }) {
   const [score, setScore] = useState(0);
   const [finished, setFinished] = useState(false);
   const [counter, setCounter] = useState(0);
+  const [allOptions, setAllOptions] = useState([]);
+
   // decode html entities
   const decodeHtml = (element) => {
     const txt = document.createElement("textarea");
@@ -27,13 +29,6 @@ function AppProvider({ children }) {
     answer.classList.remove("hidden");
     setTimeout(() => answer.classList.add("hidden"), 1000);
   };
-  function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
-      [array[i], array[j]] = [array[j], array[i]]; // swap elements
-    }
-    return array;
-  }
 
   // create an object to hold the Quiz data
   let quizData = {
@@ -50,6 +45,13 @@ function AppProvider({ children }) {
     ]);
     quizData.correctAnswer.push(element.correct_answer);
   });
+
+  useEffect(() => {
+    const opt = quizData.options[currentQuestion];
+    const shuffledOptions = opt.sort(() => Math.random() - 0.5);
+    setAllOptions(shuffledOptions);
+    console.log("correct", quizData.correctAnswer);
+  }, [currentQuestion]);
 
   const UpdateQuistion = (answer) => {
     // increas the counter by 1 to track the number of questions answered
@@ -89,15 +91,13 @@ function AppProvider({ children }) {
   const navigateQuestion = (index) => {
     setCurrentQuestion(index);
   };
-
-  // quizData.options.forEach((element) => {
-  //   element.sort(() => Math.random() - 0.5);
-  // });
+  // shuffle(quizData.options);
 
   return (
     <AppContext.Provider
       value={{
         quizData,
+        allOptions,
         score,
         UpdateQuistion,
         navigateQuestion,

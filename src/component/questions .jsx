@@ -3,8 +3,14 @@ import { useGlobalContext } from "../context.jsx";
 import right from "../assets/svg/Check_round_fill.svg";
 import wrong from "../assets/svg/close_round_fill.svg";
 export default function Questions() {
-  const { quizData, UpdateQuistion, currentQuestion, navigateQuestion } =
-    useGlobalContext();
+  const {
+    quizData,
+    allOptions,
+    UpdateQuistion,
+    currentQuestion,
+    navigateQuestion,
+  } = useGlobalContext();
+
   // function to decode the otptions To html entities
   const decodeHtml = (element) => {
     const txt = document.createElement("textarea");
@@ -42,7 +48,7 @@ export default function Questions() {
               <div className="  w-full flex-4">
                 <div className="grid grid-cols-2 gap-5 h-full w-full content-center ">
                   {!quizData.options.length == 0 ? (
-                    quizData.options[currentQuestion]?.map((item, i) => (
+                    allOptions?.map((item, i) => (
                       <button
                         key={i}
                         className="bg-[#393F6E] p-4.5 rounded-xl cursor-pointer
