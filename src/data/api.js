@@ -1,5 +1,8 @@
 import { useGlobalContext } from "../context";
 const cacheKey = "cachedQuestions";
+const mainurl = "https://restcountries.com/v3.1/all?limit=10";
+const alternateUrl =
+  "https://opentdb.com/api.php?amount=10&category=9&difficulty=medium";
 
 export default async function getQuestions() {
   const cachedData = localStorage.getItem(cacheKey);
@@ -10,9 +13,7 @@ export default async function getQuestions() {
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
   try {
-    const response = await fetch(
-      "https://opentdb.com/api.php?amount=10&category=9&difficulty=medium"
-    );
+    const response = await fetch(alternateUrl);
 
     if (response.status === 429) {
       console.warn("Rate limited. Retrying in 5 seconds...");
@@ -32,7 +33,6 @@ export default async function getQuestions() {
     }));
 
     localStorage.setItem(cacheKey, JSON.stringify(questions));
-
     return questions;
   } catch (error) {
     console.error("Error fetching questions:", error);

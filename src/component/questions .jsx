@@ -4,19 +4,16 @@ import right from "../assets/svg/Check_round_fill.svg";
 import wrong from "../assets/svg/close_round_fill.svg";
 export default function Questions() {
   const {
-    quizData,
+    data,
     allOptions,
     UpdateQuistion,
     currentQuestion,
+    decodeHtml,
     navigateQuestion,
   } = useGlobalContext();
 
   // function to decode the otptions To html entities
-  const decodeHtml = (element) => {
-    const txt = document.createElement("textarea");
-    txt.innerHTML = element;
-    return txt.value;
-  };
+
   return (
     <>
       <div className="game shadow-[0_35px_35px_rgba(0,0,0,0.25)] bg-[#343964] rounded-[10px] h-full row-start-3 row-end-9 ">
@@ -39,15 +36,15 @@ export default function Questions() {
               <div className="  w-full flex-2">
                 <div className="   text-lg flex flex-col h-full w-full items-center justify-center">
                   <div>
-                    {!quizData.options.length == 0
-                      ? decodeHtml(quizData?.allQuestions[currentQuestion])
+                    {!data?.allQuestions.length == 0
+                      ? decodeHtml(data?.allQuestions[currentQuestion])
                       : "Please try to refresh the page"}
                   </div>
                 </div>
               </div>
               <div className="  w-full flex-4">
                 <div className="grid grid-cols-2 gap-5 h-full w-full content-center ">
-                  {!quizData.options.length == 0 ? (
+                  {!data.options.length == 0 ? (
                     allOptions?.map((item, i) => (
                       <button
                         key={i}
