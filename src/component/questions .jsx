@@ -1,7 +1,7 @@
 import "./Questions.css";
 import { useGlobalContext } from "../context.jsx";
 import right from "../assets/svg/Check_round_fill.svg";
-import wrong from "../assets/svg/close_round_fill.svg";
+import wrong from "../assets/svg/Close_round_fill.svg";
 export default function Questions() {
   const {
     data,
