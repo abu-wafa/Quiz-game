@@ -9,7 +9,7 @@ const Quiz = () => {
         <div className="header h-[4.5rem] row-start-2 ">
           <div className="flex flex-row items-center justify-between text-sm">
             <div>
-              <p className="font-bold sm:text-3xl text-sm">Country Quiz</p>
+              <p className="font-bold sm:text-3xl text-sm">Quiz Game</p>
             </div>
             <div className="bg-gradient-to-r from-[#E65895] to-[#BC6BE8] p-1.5 sm:pl-4 sm:pr-4 rounded-r-2xl rounded-l-2xl sm:text-base">
               <span className="pb-0.5">
