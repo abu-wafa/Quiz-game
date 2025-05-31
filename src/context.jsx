@@ -66,7 +66,6 @@ function AppProvider({ children }) {
       setFinished(true);
     }
     // check if the answer is correct and update the score
-
     if (
       answer.target.innerText.toLowerCase() ==
       decodeHtml(data.correctAnswer[currentQuestion].toLowerCase())
@@ -90,7 +89,7 @@ function AppProvider({ children }) {
   };
   if (finished) {
     setTimeout(() => {
-      window.location.href = "http://localhost:5173/congrat";
+      window.location.href = "/congrat";
       setFinished(false);
       setScore(0);
     }, 1000);

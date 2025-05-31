@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 const Congratulation = () => {
   // get the score from local storage
   const score = JSON.parse(localStorage.getItem("score"));
+  const newQuistions = () => {
+    localStorage.clear();
+    window.location.href = "/";
+  };
   return (
     <>
       <div className="congratulation w-full h-full ">
@@ -13,16 +17,17 @@ const Congratulation = () => {
               Congratulations! You completed the quiz!
             </div>
             <div className=" mb-8 text-[#E2E4F2]">
-              You answer {score}/10 correctly
+              You answered <span className="text-red-400">{score} /10</span>{" "}
+              correctly
             </div>
-            <Link to="/">
+            <div className="mb-16">
               <button
-                onClick={() => localStorage.setItem("score", JSON.stringify(0))}
-                className="cursor-pointer bg-[#454a7a] hover:bg-gradient-to-r from-[#E65895] to-[#BC6BE8] text-white font-bold py-4 sm:px-18 px-10 rounded mb-16"
+                onClick={() => newQuistions()}
+                className="cursor-pointer bg-[#454a7a] hover:bg-gradient-to-r from-[#E65895] to-[#BC6BE8] text-white font-bold py-4 sm:px-18 px-10 rounded "
               >
                 Play Again
               </button>
-            </Link>
+            </div>
           </div>
         </div>
       </div>

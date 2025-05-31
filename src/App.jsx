@@ -5,7 +5,7 @@ import Congratulation from "./pages/congrat";
 import Loader from "./component/Loader";
 import Error from "./pages/Error";
 import { useGlobalContext } from "./context";
-
+// the app function is the main component of the application which sets up the routes for the application
 function App() {
   const { loading } = useGlobalContext();
   if (loading) return <Loader />;
