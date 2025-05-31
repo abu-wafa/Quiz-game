@@ -1,7 +1,7 @@
 import "./Questions.css";
 import { useGlobalContext } from "../context.jsx";
-import right from "../../assets/svg/right.svg";
-import wrong from "../../assets/svg/wrong.svg";
+import right from "../assets/svg/right.svg";
+import wrong from "../assets/svg/wrong.svg";
 export default function Questions() {
   const {
     data,
